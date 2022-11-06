@@ -1,30 +1,10 @@
-import pytest
-
 from typing import Dict
-
 from fastapi.testclient import TestClient
-
 from app.core.config import settings
-
-from typing import Dict, Generator
-
-
-from fastapi.testclient import TestClient
-from sqlalchemy.orm import Session
-
-from app.main import app
-from app.core.config import settings
-from app.database import database
-from app.models import models
-
-
+from typing import Dict
 from tests.utils import (
-    create_random_user,
-    get_superuser_authentication_headers,
-    get_user_authentication_headers,
     get_random_user
     )
-
 
 
 def test_get_access_token(client: TestClient) -> None:
