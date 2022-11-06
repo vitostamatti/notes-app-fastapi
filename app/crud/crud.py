@@ -123,8 +123,6 @@ def update_note(db: Session, db_note:models.Note, note:schemas.NoteUpdate):
     
     return db_note
 
-
-
     
 def delete_note(db: Session, note_id:int):
     db_note = get_note(db, note_id)
@@ -132,46 +130,3 @@ def delete_note(db: Session, note_id:int):
     db.commit()
     return db_note
 
-
-def get_notes_group(db: Session, group_id: int) -> Union[models.NotesGroup,None]:
-    return db.query(models.NotesGroup).filter(models.NotesGroup.id == group_id).first()
-
-
-def get_notes_group_by_name(db: Session, name: str) -> Union[models.NotesGroup,None]:
-    return db.query(models.NotesGroup).filter(models.NotesGroup.name == name).first()
-
-
-def get_notes_groups(db: Session, skip: int = 0, limit: int = 100) -> Union[List[models.NotesGroup],List[None]]:
-    return db.query(models.NotesGroup).offset(skip).limit(limit).all()
-
-def get_notes_groups_by_author(db: Session, author_id:int, skip: int = 0, limit: int = 100) -> Union[List[models.NotesGroup],List[None]]:
-    return db.query(models.NotesGroup).filter(
-        models.NotesGroup.author_id == author_id
-        ).offset(skip).limit(limit).all()
-
-
-def create_notes_group(db: Session, author_id: int, notes_group: schemas.NotesGroupCreate):
-    db_notes_group = models.NotesGroup(name=notes_group.name, author_id=author_id)
-    db.add(db_notes_group)
-    db.commit()
-    db.refresh(db_notes_group)
-    return db_notes_group
-
-
-def update_notes_group(db: Session, db_notes_group: models.NotesGroup, notes_group: schemas.NotesGroupUpdate):
-    notes_group_data = notes_group.dict(exclude_unset=True)
-    
-    for key, value in notes_group_data.items():
-        setattr(db_notes_group, key, value)
-        
-    db.add(db_notes_group)
-    db.commit()
-    db.refresh(db_notes_group)
-    return db_notes_group
-    
-    
-def delete_notes_group(db: Session, group_id:int):
-    db_notes_group = get_notes_group(db, group_id)
-    db.delete(db_notes_group)
-    db.commit()
-    return db_notes_group

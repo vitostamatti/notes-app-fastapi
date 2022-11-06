@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.routers import notes, notes_groups, user, login
+from app.routers import notes, user, login
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
@@ -18,11 +18,6 @@ app.include_router(
     user.router, 
     prefix=f"{settings.API_PREFIX}/user", 
     tags=["user"]
-)
-app.include_router(
-    notes_groups.router, 
-    prefix=f"{settings.API_PREFIX}/user",
-    tags=["notes_groups"]
 )
 app.include_router(
     notes.router, 
