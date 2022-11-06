@@ -25,27 +25,6 @@ class NoteUpdate(BaseModel):
     notes_group_id: Optional[int] = None
 
 
-# Notes Groups
-class NotesGroupBase(BaseModel):
-    name:str
-
-
-class NotesGroupCreate(NotesGroupBase):
-    pass
-
-
-class NotesGroupRead(NotesGroupBase):
-    id: int
-    notes: List[NoteRead] = []
-
-    class Config:
-        orm_mode = True
-        
-        
-class NotesGroupUpdate(BaseModel):
-    name: Optional[str] = None
-
-
 # Access Token
 class Token(BaseModel):
     access_token: str
