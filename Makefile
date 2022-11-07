@@ -14,4 +14,15 @@ test:
 	python -m pytest -vv --cov=app/ tests
 
 
-all: install format lint test
+build-image:
+	python cli.py db-reset
+	python cli.py db-init
+	docker build . --tag notes-app-fastapi:latest  
+
+
+run-image:
+	docker run -d --name notes-app-fastapi-container -p 80:80 notes-app-fastapi
+
+
+clean-image: 
+	docker rm notes-app-fastapi-container
