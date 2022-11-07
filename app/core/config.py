@@ -2,27 +2,22 @@ import secrets
 
 from typing import Any, Dict, List, Optional, Union
 
-from pydantic import (
-    AnyHttpUrl, BaseSettings, 
-    HttpUrl, 
-    PostgresDsn, validator
-    )
+from pydantic import AnyHttpUrl, BaseSettings, validator
 
 
 class Settings(BaseSettings):
 
     API_PREFIX: str = "/api/v1"
-    
+
     SECRET_KEY: str = secrets.token_urlsafe(32)
 
-    
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8 # 60 minutes * 24 hours * 8 days = 8 days
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = (
+        60 * 24 * 8
+    )  # 60 minutes * 24 hours * 8 days = 8 days
 
-    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = [
-        "http://localhost"
-    ]
+    BACKEND_CORS_ORIGINS: List[AnyHttpUrl] = ["http://localhost"]
 
-    @validator("BACKEND_CORS_ORIGINS", pre=True,allow_reuse=True)
+    @validator("BACKEND_CORS_ORIGINS", pre=True, allow_reuse=True)
     def assemble_cors_origins(cls, v: Union[str, List[str]]) -> Union[List[str], str]:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
@@ -34,7 +29,6 @@ class Settings(BaseSettings):
     # SERVER_NAME: str
     SERVER_HOST: AnyHttpUrl = "http://localhost"
 
-
     USE_POSTGRES_DB: bool = False
     POSTGRES_DB: Optional[str]
     POSTGRES_SERVER: Optional[str]
@@ -43,7 +37,7 @@ class Settings(BaseSettings):
     POSTGRES_PORT: Optional[str]
     POSTGRES_PASSWORD: Optional[str]
 
-    USE_SQLITE_DB: bool = True   
+    USE_SQLITE_DB: bool = True
     SQLITE_DB: Optional[str] = "database.sqlite"
 
     SQLALCHEMY_DATABASE_URI: Optional[str] = None
@@ -56,7 +50,7 @@ class Settings(BaseSettings):
             return v
 
         elif values.get("USE_SQLITE_DB"):
-            dbname=values.get("SQLITE_DB")
+            dbname = values.get("SQLITE_DB")
             return f"sqlite:///{dbname}"
 
         elif values.get("USE_POSTGRES_DB"):
@@ -65,13 +59,15 @@ class Settings(BaseSettings):
             password = values.get("POSTGRES_PASSWORD")
             host = values.get("POSTGRES_HOST")
             port = values.get("POSTGRES_PORT")
-            return f'postgresql://{user}:{password}@{host}:{port}/{schema}'
-
+            return f"postgresql://{user}:{password}@{host}:{port}/{schema}"
 
     FIRST_SUPERUSER: str = "admin"
-    FIRST_SUPERUSER_EMAIL: str = 'vitostamatti@gmail.com'
+    FIRST_SUPERUSER_EMAIL: str = "vitostamatti@gmail.com"
     FIRST_SUPERUSER_PASSWORD: str = "admin"
 
+    TEST_USER: str = "user"
+    TEST_USER_EMAIL: str = "user@domain.com"
+    TEST_USER_PASSWORD: str = "user"
 
     class Config:
         case_sensitive = True

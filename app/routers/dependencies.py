@@ -27,9 +27,8 @@ def get_db() -> Generator:
 
 
 def get_current_user(
-    db: Session = Depends(get_db), 
-    token: str = Depends(reusable_oauth2)
-    ) -> models.User:
+    db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
+) -> models.User:
 
     try:
         payload = jwt.decode(
@@ -49,7 +48,7 @@ def get_current_user(
 
 def get_current_active_user(
     current_user: models.User = Depends(get_current_user),
-    ) -> models.User:
+) -> models.User:
     if not crud.user_is_active(current_user):
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
@@ -57,7 +56,7 @@ def get_current_active_user(
 
 def get_current_active_superuser(
     current_user: models.User = Depends(get_current_user),
-    ) -> models.User:
+) -> models.User:
     if not crud.user_is_superuser(current_user):
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough privileges"

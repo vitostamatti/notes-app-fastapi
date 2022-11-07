@@ -6,16 +6,9 @@ from app.core.config import settings
 
 
 engine = create_engine(
-    settings.SQLALCHEMY_DATABASE_URI,
-    connect_args={"check_same_thread": False}
+    settings.SQLALCHEMY_DATABASE_URI, connect_args={"check_same_thread": False}
 )
 
-SessionMaker = sessionmaker(
-    autocommit=False, 
-    autoflush=False, 
-    bind=engine
-)
+SessionMaker = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
-
-

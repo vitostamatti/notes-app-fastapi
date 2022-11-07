@@ -1,11 +1,8 @@
-from sqlalchemy import (
-    Boolean, Column, 
-    ForeignKey, Integer, String,
-    DateTime
-    )
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 
 from app.database.database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -27,12 +24,4 @@ class Note(Base):
     name = Column(String, unique=True, index=True)
     content = Column(String)
     author_id = Column(Integer, ForeignKey("users.id"))
-    notes_group_id = Column(Integer, ForeignKey("notes_groups.id"))
-    
-    notes_group = relationship("NotesGroup", back_populates="notes")
     author = relationship("User", back_populates="notes")
-
-
-
-
-

@@ -4,25 +4,25 @@ from pydantic import BaseModel
 
 # Notes
 class NoteBase(BaseModel):
-    name:str
-    content:Optional[str] = None
+    name: str
+    content: Optional[str] = None
 
 
 class NoteCreate(NoteBase):
-    notes_group_id: Optional[int] = None
+    pass
+
 
 class NoteRead(NoteBase):
     id: int
     author_id: int
-    notes_group_id: int
 
     class Config:
         orm_mode = True
-        
+
+
 class NoteUpdate(BaseModel):
-    name:Optional[str] = None
-    content:Optional[str]= None
-    notes_group_id: Optional[int] = None
+    name: Optional[str] = None
+    content: Optional[str] = None
 
 
 # Access Token
@@ -33,7 +33,6 @@ class Token(BaseModel):
 
 class TokenPayload(BaseModel):
     sub: Optional[int] = None
-
 
 
 # User
@@ -56,9 +55,10 @@ class UserUpdate(UserBase):
 
 # DB schemas
 class UserRead(UserBase):
-    id: int 
+    id: int
     notes: List[NoteRead] = []
-    is_active: bool   
+    is_active: bool
+
     class Config:
         orm_mode = True
 
@@ -66,4 +66,3 @@ class UserRead(UserBase):
 # Additional properties stored in DB
 class UserWrite(UserRead):
     hashed_password: str
-

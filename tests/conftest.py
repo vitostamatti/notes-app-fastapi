@@ -7,18 +7,15 @@ from fastapi.testclient import TestClient
 from typing import Dict, Generator
 
 from fastapi.testclient import TestClient
-from sqlalchemy.orm import Session
 
 from app.main import app
 from app.database import database
-from app.models import models
-
+from app.schemas import schemas
 
 from tests.utils import (
-    create_random_user,
     get_superuser_authentication_headers,
     get_user_authentication_headers,
-    )
+)
 
 
 @pytest.fixture(scope="session")
@@ -37,11 +34,6 @@ def superuser_token_headers(client: TestClient) -> Dict[str, str]:
     return get_superuser_authentication_headers(client)
 
 
-@pytest.fixture(scope="session")
-def user_test(client: TestClient) -> models.User:
-    return create_random_user()
-
-
 @pytest.fixture(scope="module")
-def normal_user_token_headers(client: TestClient, db: Session) -> Dict[str, str]:
-    return get_user_authentication_headers(client=client, user=user_test)
+def normal_user_token_headers(client: TestClient) -> Dict[str, str]:
+    return get_user_authentication_headers(client=client)

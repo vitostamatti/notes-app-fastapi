@@ -6,3 +6,6 @@ passlib
 python-jose
 bcrypt
 pytest
+pytest-cov
+pylint
+black

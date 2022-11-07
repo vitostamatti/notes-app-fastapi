@@ -15,18 +15,16 @@ from app.core.config import settings
 
 router = APIRouter()
 
+
 @router.post("/login/access-token", response_model=schemas.Token)
 def login_access_token(
-    db: Session = Depends(deps.get_db), 
-    form_data: OAuth2PasswordRequestForm = Depends()
-    ) -> Any:
+    db: Session = Depends(deps.get_db), form_data: OAuth2PasswordRequestForm = Depends()
+) -> Any:
     """
     OAuth2 compatible token login, get an access token for future requests
     """
     user = crud.authenticate_user(
-        db, 
-        username=form_data.username, 
-        password=form_data.password
+        db, username=form_data.username, password=form_data.password
     )
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect email or password")
@@ -51,10 +49,10 @@ def test_token(current_user: models.User = Depends(deps.get_current_user)) -> An
 
 @router.post("/register", response_model=schemas.UserRead)
 def create_user(
-    user: schemas.UserCreate, 
+    user: schemas.UserCreate,
     db: Session = Depends(deps.get_db),
     current_user: models.User = Depends(deps.get_current_active_superuser),
-    ) -> Any:
+) -> Any:
     """
     Create new user.
     """
