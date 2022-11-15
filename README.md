@@ -2,76 +2,47 @@
 
 <h1 align="center">Notes App FastAPI</h1>
 
-<div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
-</div>
-
----
-
-<p align="center"> Few lines describing your project.
+<p align="center"> 
+    A basic CRUD API of Notes with users JWT authentication.
     <br> 
 </p>
 
-## Table of Contents
-
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [Authors](#authors)
-
-
-## About <a name = "about"></a>
-
-Write about 1-2 paragraphs describing the purpose of your project.
 
 ## Getting Started <a name = "getting_started"></a>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+First you need to clone this repository.
 
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
+```bash
+git clone https://github.com/vitostamatti/notes-app-fastapi/ 
 ```
 
-And repeat
+Then cd into the notes-app-fastapi directory and run 
 
 ```
-until finished
+docker compose up
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+If you don't have docker installed you first need to [download](https://www.docker.com/) it.
 
 ## Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+When the docker containers are running you can start playing with the app.
 
-```bash
-uvicorn main:app --host 0.0.0.0 --port 80 --reload
-```
+If you go to [localhost/5050](http://localhost/5050) you're going to see the pgadming app. 
+There you can login using: 
+- username: admin@domain.com 
+- password: admin 
 
+The best way to interact with the api listening on [localhost/8000](http://localhost/8000) 
+is to access going to [localhost/8000/docs](http://localhost/8000/docs) and play around 
+with the swagger documentation. To login as a superuser use:
 
-## Deployment <a name = "deployment"></a>
+- username: admin
+- password: admin
 
-Add additional notes about how to deploy this on a live system.
+You'll get a bearer token in theresponse and this will provide access to the rest of the endpoints.
 
-## Built Using <a name = "built_using"></a>
-
-- [FastAPI](https://fastapi.tiangolo.com/) - API Framework
-- [PostgreSQL](https://expressjs.com/) - SQL Database
-- [Docker](https://vuejs.org/) - Deployment
 
 ## Authors <a name = "authors"></a>
 

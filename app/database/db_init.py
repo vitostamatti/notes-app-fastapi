@@ -55,3 +55,4 @@ def init():
 
 def reset():
     drop_tables()
+

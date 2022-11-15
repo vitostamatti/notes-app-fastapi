@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from app.database.database import Base
 
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -25,3 +26,4 @@ class Note(Base):
     content = Column(String)
     author_id = Column(Integer, ForeignKey("users.id"))
     author = relationship("User", back_populates="notes")
+

@@ -3,6 +3,7 @@ from app.routers import notes, user, login
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.responses import RedirectResponse
 from .core.config import settings
+from app.database.db_init import init
 
 app = FastAPI(title=settings.PROJECT_NAME)
 app.include_router(login.router, prefix=settings.API_PREFIX, tags=["login"])
@@ -22,6 +23,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.on_event("startup")
+async def startup_event():
+    print("initializing database")
+    init()
 
 @app.get("/", include_in_schema=False)
 def docs_redirect():

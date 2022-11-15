@@ -10,3 +10,4 @@ pytest-cov
 pylint
 black
 python-multipart
+psycopg2-binary
